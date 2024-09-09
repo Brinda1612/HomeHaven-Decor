@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+        xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Add Contact</title>
+</head>
+<body>
+<div id="content">
+    <!-- sidebar -->
+
+    <!-- user is logged in : sidebar -->
+
+    <div th:if="${user}">
+        <div data-th-replace="~{admin/sidebar :: sidebar}"></div>
+    </div>
+
+    <div class="sm:pl-64 pt-20" style="height: 1000px">
+        <div class="grid grid-cols-12">
+            <div class="col-span-3"></div>
+            <div class="col-span-12 md:col-span-6">
+                <div
+                        class="card block p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 "
+                >
+                    <div data-th-replace="~{message::messagebox}"></div>
+
+                    <h1 class="text-2xl font-semibold">Add New Product</h1>
+                    <p class="text-gray-500">
+                        This contact will be stored on cloud, you can direct email this
+                        client from scm...
+                    </p>
+
+                    <form
+                            class="mt-8"
+                            data-th-action="@{'/admin/product/add'}"
+                            data-th-object="${product}"
+                            method="POST"
+                            enctype="multipart/form-data"
+
+
+                    >
+
+                        <!--                         profile photo-->
+
+                        <div class="flex items-center ">
+                            <div class="">
+                                <img id='preview_img' class="h-16 w-16 object-cover rounded-full"
+                                     src="https://media.istockphoto.com/id/1312319385/vector/camera-photography-logo-icon-design-vector.jpg?s=612x612&w=0&k=20&c=3UAxKf0J4dgrqjRIrJM8sbfXBAVgrgLfGOGxIZxa0U4="
+                                     alt="Current profile photo"/>
+                            </div>
+
+                            <label class="rounded-full"><input type="file" onchange="loadFile(event)"
+                                                               data-th-field="*{productImage}"
+                                                               class="pl-8  ml-0"/> </label>
+                        </div>
+
+                        <p
+                                class="text-red-500"
+                                data-th-if="${#fields.hasErrors('productImage')}"
+                                data-th-errors="*{productImage}"
+                        >
+                            Invalid Name
+                        </p>
+
+                        <!--                        name field -->
+                        <label for="website-admin"
+                               class=" mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name </label>
+                        <div class="flex">
+                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+<i class="fa-solid fa-file-signature"></i>                            </span>
+                            <input type="text" id="website-admin" data-th-field="*{name}"
+                                   class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   placeholder="product name" required>
+
+                        </div>
+                        <p
+                                class="text-red-500"
+                                data-th-if="${#fields.hasErrors('name')}"
+                                data-th-errors="*{name}"
+                        >
+                            Invalid Name
+                        </p>
+
+
+                        <!--                        phone Number field -->
+                        <label for="website-admin"
+                               class=" mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">price </label>
+                        <div class="flex">
+                            <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+<i class="fa-solid fa-tags"></i>
+                            </span>
+                            <label>
+                                <input type="number" data-th-field="*{price}"
+                                       class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                       placeholder="100 /-" required>
+                            </label>
+
+                        </div>
+                        <p
+                                class="text-red-500"
+                                data-th-if="${#fields.hasErrors('price')}"
+                                data-th-errors="*{price}"
+                        >
+                            Invalid Name
+                        </p>
+
+
+                        <!-- address -->
+
+                        <div class="mb-3 mt-5">
+                            <label
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                description
+                            </label>
+                            <textarea
+                                    data-th-field="*{description}"
+                                    rows="2"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="product description" required
+                            ></textarea>
+                            <p
+                                    class="text-red-500"
+                                    data-th-if="${#fields.hasErrors('description')}"
+                                    data-th-errors="*{description}"
+                            >
+                                Invalid Name
+                            </p>
+                        </div>
+
+
+                        <!--                        button -->
+                        <div class="button-container text-center">
+                            <button
+                                    type="submit"
+                                    class="px-3 py-2 dark:bg-green-600 hover:dark:bg-blue-700 rounded bg-green-800 text-white"
+                            >
+                                Add Product
+                            </button>
+                            <button
+                                    type="reset"
+                                    class="px-3 py-2 dark:bg-yellow-600 hover:dark:bg-blue-700 rounded bg-red-600 text-white"
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h1> meet </h1>
+<script data-th-src="@{'/js/admin.js'}"></script>
+<script>
+    console.log("this is profile page");
+
+</script>
+<script>
+    var loadFile = function (event) {
+
+        var input = event.target;
+        var file = input.files[0];
+        var type = file.type;
+
+        var output = document.getElementById('preview_img');
+
+
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+</script>
+</body>
+</html>
